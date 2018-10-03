@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class EditSprintTest extends TestCase
+class EditSprintTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_edit_a_sprint()
@@ -21,7 +21,7 @@ class EditSprintTest extends TestCase
         $newSprint = factory(App\Sprint::class)->make();
 
         // Login first user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Visit page
         $this->visit(route('sprint.edit', ['sprint' => $sprint]));

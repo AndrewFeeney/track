@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class EditClientTest extends TestCase
+class EditClientTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_edit_a_client()
@@ -18,7 +18,7 @@ class EditClientTest extends TestCase
         ]);
 
         // Login user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Visit edit client page
         $this->visit(route('client.edit', ['client' => $client]));

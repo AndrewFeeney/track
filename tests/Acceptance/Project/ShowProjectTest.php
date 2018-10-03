@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ShowProjectTest extends TestCase
+class ShowProjectTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_view_details_of_a_project()
@@ -15,7 +15,7 @@ class ShowProjectTest extends TestCase
         $project = factory(App\Project::class)->create();
 
         // Login user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Visit show project page
         $this->visit(route('project.show', ['project' => $project]));

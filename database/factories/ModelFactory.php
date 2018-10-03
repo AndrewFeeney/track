@@ -11,6 +11,8 @@
 |
 */
 
+use Carbon\Carbon;
+
 // User factory
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
@@ -41,5 +43,22 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
 $factory->define(App\Sprint::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word(),
+    ];
+});
+
+// Task factory
+$factory->define(App\Task::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence,
+        'description' => $faker->sentence,
+        'status' => $faker->word,
+    ];
+});
+
+// Session factory
+$factory->define(App\Session::class, function (Faker\Generator $faker) {
+    return [
+        'started_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        'ended_at' => Carbon::now()->format('Y-m-d H:i:s'), 
     ];
 });

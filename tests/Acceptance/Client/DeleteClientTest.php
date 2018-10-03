@@ -4,15 +4,15 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class DeleteClientTest extends TestCase
+class DeleteClientTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_delete_a_client()
     {
         // Login first user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Generate client
         $client = App\Client::create([

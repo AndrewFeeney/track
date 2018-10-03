@@ -4,18 +4,18 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CreateProjectTest extends TestCase
+class CreateProjectTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_create_a_project()
     {
         // Create client
-        $client = App\Client::create();
+        $client = factory(App\Client::class)->create();
 
         // Login first user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Visit page
         $this->visit(route('project.create'));

@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class EditProjectTest extends TestCase
+class EditProjectTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_edit_a_project()
@@ -18,7 +18,7 @@ class EditProjectTest extends TestCase
         $project = factory(App\Project::class)->create(['client_id' => $clients[0]->id]);
 
         // Login user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Visit edit project page
         $this->visit(route('project.edit', ['project' => $project]));

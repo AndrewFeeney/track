@@ -6,18 +6,18 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\Project;
 
-class DeleteProjectTest extends TestCase
+class DeleteProjectTest extends BrowserKitTestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /** @test */
     public function a_logged_in_user_can_delete_a_project()
     {
         // Login first user
-        \Auth::login(App\User::first());
+        $user = $this->actingAsUser();
 
         // Generate project
-        $project = Project::create(['name' => 'Test Project']);
+        $project = factory(Project::class)->create(['name' => 'Test Project']);
 
         // Visit route 
         $this->delete(route('project.destroy', [
